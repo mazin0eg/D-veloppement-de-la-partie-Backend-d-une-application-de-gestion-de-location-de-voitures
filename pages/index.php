@@ -1,5 +1,30 @@
 <?php
 include 'php.php';
+// Count clients
+$client_count = 0;
+$result = $conn->query("SELECT COUNT(*) AS total_clients FROM Clients");
+if ($result) {
+    $row = $result->fetch_assoc();
+    $client_count = $row['total_clients'];
+}
+
+// Count cars
+$car_count = 0;
+$result = $conn->query("SELECT COUNT(*) AS total_cars FROM Voitures");
+if ($result) {
+    $row = $result->fetch_assoc();
+    $car_count = $row['total_cars'];
+}
+
+// Count contracts
+$contract_count = 0;
+$result = $conn->query("SELECT COUNT(*) AS total_contracts FROM Contrats");
+if ($result) {
+    $row = $result->fetch_assoc();
+    $contract_count = $row['total_contracts'];
+}
+
+$conn->close();
 ?>
 
 
@@ -25,19 +50,20 @@ include 'php.php';
 
             <!-- Statistics -->
             <section class="statistics">
-                <div class="stat-card revenue">
-                    <p>CHIFFRE D'AFFAIRES</p>
-                    <h2>301100 DH</h2>
-                </div>
-                <div class="stat-card cars">
-                    <p>VOITURES</p>
-                    <h2>23</h2>
-                </div>
-                <div class="stat-card clients">
-                    <p>CLIENTS</p>
-                    <h2>17</h2>
-                </div>
-            </section>
+    <div class="stat-card revenue">
+        <p>CONTRATS</p>
+        <h2><?= htmlspecialchars($contract_count); ?></h2>
+    </div>
+    <div class="stat-card cars">
+        <p>VOITURES</p>
+        <h2><?= htmlspecialchars($car_count); ?></h2>
+    </div>
+    <div class="stat-card clients">
+        <p>CLIENTS</p>
+        <h2><?= htmlspecialchars($client_count); ?></h2>
+    </div>
+</section>
+
 
             <!-- Tables -->
             <section class="tables">

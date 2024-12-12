@@ -1,20 +1,48 @@
 <?php
 include 'php.php';
-?>
+
+if (isset($_POST['add-voiture'])) {  
+    $num_immatriculation = $_POST['num_immatriculation'];
+    $marque = $_POST['marque'];
+    $modele = $_POST['modele'];
+    $annee = $_POST['annee'];
+    if(!empty($num_immatriculation) && !empty($marque) && !empty($modele) && !empty($annee)){
+        $sql = "INSERT INTO Voitures (num_immatriculation, marque, modele, annee) 
+        VALUES ('$num_immatriculation', '$marque', '$modele', '$annee')";
+        mysqli_query($conn, $sql);
+    }
+
+   
+    
+    
+    
+
+  
+}
+$sql = "SELECT * FROM Voitures";
+$result = mysqli_query($conn, $sql);
+
+
+
+
+?>  
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>voiture Page</title>
-    <link rel="stylesheet" href="../style/voiture.css">
+    <title>Clients Page</title>
+    <link rel="stylesheet" href="../style/clients.css">
 </head>
 <body>
     <div class="container">
     <?php  include('../layout/_HEAD.php') ?>
 
-        <!-- Main Content -->
+      
+
+            <!-- Client Form -->
+            <!-- Main Content -->
         <main class="main-content">
             <header class="header">
                 <h1 class="header-title">Informations voiture</h1>
@@ -23,57 +51,74 @@ include 'php.php';
 
             <!-- Client Form -->
             <section class="client-form-section">
-                <form class="client-form">
-                    <div class="form-group">
-                        <label for="client-name" class="form-label">Matricule</label>
-                        <input type="text" id="client-name" class="form-input" placeholder="Nom du client">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone" class="form-label">Modèle</label>
-                        <input type="text" id="phone" class="form-input" placeholder="0612345678">
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="form-label">Marque</label>
-                        <input type="email" id="email" class="form-input" placeholder="exemple@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="form-label">État</label>
-                        <input type="email" id="email" class="form-input" placeholder="exemple@email.com">
-                    </div>
-                    <button type="submit" class="btn btn-save">Enregistrer</button>
-                    <button type="button" class="btn btn-delete">Supprimer</button>
-                </form>
-            </section>
+ <form class="client-form" method="POST" action="voiture.php">
+        <div class="form-group">
+            <label for="num_immatriculation" class="form-label">num_immatriculation</label>
+            <input type="text" id="client-name" name="num_immatriculation" class="form-input" placeholder="matricule" require>
+        </div>
+        <div class="form-group">
+            <label for="marque" class="form-label">marque</label>
+            <input type="text" id="phone" name="marque" class="form-input" placeholder="0612345678" require>
+        </div>
+        <div class="form-group">
+            <label for="modelle" class="form-label">modele</label>
+            <input type="text" id="email" name="modele" class="form-input" placeholder="exemple@email.com" require>
+        </div>
+        <div class="form-group">
+            <label for="anneee" class="form-label">annee</label>
+            <input type="text" id="annee" name="annee" class="form-input" placeholder="annee" require>
+        </div>
+        <!-- Save button to add client -->
+        <input type="submit" value="Enregistrer" name="add-voiture" class="btn btn-save" require>
+        
+        <!-- Delete button to delete client -->
+        
+    </form>
 
+  
+</section>
+
+
+            <!-- Clients Table -->
             <section class="clients-table-section">
-                <h2 class="table-title">Liste des Clients</h2>
-                <table class="clients-table">
-                    <thead class="table-head">
-                        <tr class="table-row">
-                            <th class="table-header">Matricule</th>
-                            <th class="table-header">Modèle</th>
-                            <th class="table-header">Marque</th>
-                            <th class="table-header">État</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-body">
-                        <tr class="table-row">
-                            <td class="table-data">1-A-45810</td>
-                            <td class="table-data">Q8</td>
-                            <td class="table-data">Audi</td>
-                            <td class="table-data">neuf</td>
-                        </tr>
-                        <tr class="table-row">
-                            <td class="table-data">1-A-45810</td>
-                            <td class="table-data">PHANTOM</td>
-                            <td class="table-data">Rolls Roys</td>
-                            <td class="table-data">utilusé</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h2 class="table-title">Liste denum_immatriculations Clients</h2>
+                <!-- Clients Table -->
+<table class="clients-table">
+    <thead class="table-head">
+        <tr class="table-row">
+            
+            <th class="table-header">num_immatriculation</th>
+            <th class="table-header">marque</th>
+            <th class="table-header">modele</th>
+            <th class="table-header">annee</th>
+            <th class="table-header">Del</th>
+        </tr>
+    </thead>
+    <tbody class="table-body">
+        <?php
+        // Loop through the results and display them in the table
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "
+        <tr class='table-row'>
+        <td class='table-data'>{$row['num_immatriculation']}</td>
+        <td class='table-data'>{$row['marque']}</td>
+        <td class='table-data'>{$row['modele']}</td>
+        <td class='table-data'>{$row['annee']}</td>
+    <td class='table-data'>
+        <a href='../phpfunctions/deleteVoiture.php?num_immatriculation={$row['num_immatriculation']}' class='btn btn-delete'>Supprimer</a>
+    </td>
+</tr>";
+
+            }
+        } else {
+            echo "<tr><td colspan='5' class='table-data'>Aucun voiture trouvé.</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
             </section>
         </main>
     </div>
 </body>
 </html>
-
