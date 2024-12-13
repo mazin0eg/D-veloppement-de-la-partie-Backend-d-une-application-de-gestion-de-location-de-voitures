@@ -18,7 +18,7 @@ if ($result) {
 
 // Count contracts
 $contract_count = 0;
-$result = $conn->query("SELECT COUNT(*) AS total_contracts FROM Contrats");
+$result = $conn->query("SELECT COUNT(*) AS total_contracts FROM contracts");
 if ($result) {
     $row = $result->fetch_assoc();
     $contract_count = $row['total_contracts'];

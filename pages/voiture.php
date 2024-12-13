@@ -58,11 +58,11 @@ $result = mysqli_query($conn, $sql);
         </div>
         <div class="form-group">
             <label for="marque" class="form-label">marque</label>
-            <input type="text" id="phone" name="marque" class="form-input" placeholder="0612345678" require>
+            <input type="text" id="phone" name="marque" class="form-input" placeholder="marque" require>
         </div>
         <div class="form-group">
             <label for="modelle" class="form-label">modele</label>
-            <input type="text" id="email" name="modele" class="form-input" placeholder="exemple@email.com" require>
+            <input type="text" id="email" name="modele" class="form-input" placeholder="modele" require>
         </div>
         <div class="form-group">
             <label for="anneee" class="form-label">annee</label>
@@ -106,7 +106,7 @@ $result = mysqli_query($conn, $sql);
         <td class='table-data'>{$row['modele']}</td>
         <td class='table-data'>{$row['annee']}</td>
     <td class='table-data'>
-        <a href='../phpfunctions/deleteVoiture.php?num_immatriculation={$row['num_immatriculation']}' class='btn btn-delete'>Supprimer</a>
+        <a href='../phpfunctions/deletVoiture.php?id={$row['num_immatriculation']}' class='btn btn-delete'>Supprimer</a>
     </td>
 </tr>";
 
