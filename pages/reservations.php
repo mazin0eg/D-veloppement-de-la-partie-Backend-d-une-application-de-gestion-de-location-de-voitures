@@ -113,7 +113,7 @@ $reservations_result = mysqli_query($conn, $reservations_sql);
                                     <td>{$reservation['Start_Date']}</td>
                                     <td>{$reservation['End_Date']}</td>
                                     <td>{$reservation['Total']}</td>
-                                    <td><a href='../phpfunctions/deleteReservation.php?id={$reservation['ID']}'>Delete</a></td>
+                                    <td><a href='../phpfunctions/deleteReservation.php?id={$reservation['ID']}' class='btn btn-delete'>Delete</a></td>
                                 </tr>";
                         } ?>
                     </tbody>
